@@ -6,47 +6,53 @@ import java.util.Scanner;
 
 public class RunAnalista {
     public static void main(String[] args) throws IOException {
+        // Verifica se a pasta "Output" existe, caso contrário, cria a pasta
         Path outputDir = Paths.get("Output");
         if (!Files.exists(outputDir)) {
             Files.createDirectory(outputDir);
         }
 
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in); // Lê as entradas do utilizador
         System.out.print("Introduza o nome do ficheiro: ");
-        String fileName = scanner.nextLine();
-        Analista analista = new Analista("Output/" + fileName);
+        String fileName = scanner.nextLine(); // Nome do arquivo a ser processado
+        Analista analista = new Analista("Output/" + fileName); // Inicializa o Analista com o ficheiro fornecido
 
         while (true) {
             System.out.print("Opcao desejada: ");
-            String option = scanner.nextLine();
+            String option = scanner.nextLine(); // Lê a opção do utilizador
 
             if (option.startsWith("letra ")) {
-                char c = option.charAt(6);
-                int[] counts = analista.quantasOcorrencias(c);
+                // Cria um ficheiro com a contagem de palavras com a letra especificada
+                char c = option.charAt(6); // Obtém o caractere especificado
+                int[] counts = analista.quantasOcorrencias(c); // Calcula as frequências de c
                 String outputFileName = "Output/" + c + ".out";
 
+                // Escreve os resultados em um arquivo de saída
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName))) {
                     for (int i = 0; i < 5; i++) {
-                        writer.write(i + " " + counts[i]);
+                        writer.write(i + " " + counts[i]); // Contagens de 0 a 4
                         writer.newLine();
                     }
-                    writer.write("5+ " + counts[5]);
+                    writer.write("5+ " + counts[5]); // Contagem para 5 ou mais ocorrências
                 }
                 System.out.println("Ficheiro " + outputFileName + " gravado com sucesso.");
             } else if (option.startsWith("ficheiro ")) {
-                String[] parts = option.split(" ");
-                char c = parts[1].charAt(0);
-                String outputFileName = "Output/" + parts[2];
+                // Caso "ficheiro c nome": lista palavras que começam com c e salva no arquivo nome
+                String[] parts = option.split(" "); // Divide a opção para extrair parâmetros
+                char c = parts[1].charAt(0); // Caractere especificado
+                String outputFileName = "Output/" + parts[2]; // Nome do arquivo de saída
 
+                // Escreve a lista de palavras no arquivo de saída
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName))) {
                     analista.listaPalavras(c, writer);
                 }
                 System.out.println("Ficheiro " + outputFileName + " gravado com sucesso.");
             } else if (option.equals("terminar")) {
+                // Caso "terminar": encerra o programa
                 System.out.println("Sessao terminada.");
                 break;
             }
         }
-        scanner.close();
+        scanner.close(); // Fecha o Scanner
     }
 }
