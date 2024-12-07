@@ -7,20 +7,24 @@ public class Analista {
     private final Map<String, Integer> wordMap;
 
     public Analista(String fileName) throws IOException {
-        wordMap = new HashMap<>();
-        readFile(fileName);
+        this(new FileReader(fileName));
     }
 
-    private void readFile(String fileName) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(fileName));
+    public Analista(Reader reader) throws IOException {
+        wordMap = new HashMap<>();
+        readFromReader(reader);
+    }
+
+    private void readFromReader(Reader reader) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(reader);
         String line;
-        while ((line = reader.readLine()) != null) {
+        while ((line = bufferedReader.readLine()) != null) {
             String[] words = line.toUpperCase().replaceAll("[^A-Z ]", "").split("\\s+");
             for (String word : words) {
                 wordMap.put(word, wordMap.getOrDefault(word, 0) + 1);
             }
         }
-        reader.close();
+        bufferedReader.close();
     }
 
     public int[] quantasOcorrencias(char c) {
@@ -47,23 +51,20 @@ public class Analista {
             }
         }
 
-        // Ajuste para palavras sem o caractere `c`
         counts[0] = totalWords - (counts[1] + counts[2] + counts[3] + counts[4] + counts[5]);
-
         return counts;
     }
 
-
-    public void listaPalavras(char c, String fileName) throws IOException {
+    public void listaPalavras(char c, Writer writer) throws IOException {
         c = Character.toUpperCase(c);
-        BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+        BufferedWriter bufferedWriter = new BufferedWriter(writer);
 
         for (String word : wordMap.keySet()) {
             if (word.charAt(0) == c) {
-                writer.write(word + " " + wordMap.get(word));
-                writer.newLine();
+                bufferedWriter.write(word + " " + wordMap.get(word));
+                bufferedWriter.newLine();
             }
         }
-        writer.close();
+        bufferedWriter.flush();
     }
 }
