@@ -19,35 +19,35 @@ public class RunAnalista {
 
         while (true) {
             System.out.print("Opcao desejada: ");
-            String option = scanner.nextLine(); // Lê a opção do utilizador
+            String opcao = scanner.nextLine(); // Lê a opção do utilizador
 
-            if (option.startsWith("letra ")) {
+            if (opcao.startsWith("letra ")) {
                 // Cria um ficheiro com a contagem de palavras com a letra especificada
-                char c = option.charAt(6); // Obtém a letra especificada
-                int[] counts = analista.quantasOcorrencias(c); // Calcula as frequências de c
-                String outputFileName = "Output/" + c + ".out";
+                char letra = opcao.charAt(6); // Obtém a letra especificada
+                int[] contagem = analista.calcularLetras(letra); // Calcula as frequências de c
+                String outputFileName = "Output/" + letra + ".out";
 
                 // Escreve os resultados em um arquivo de saída
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName))) {
                     for (int i = 0; i < 5; i++) {
-                        writer.write(i + " " + counts[i]); // Contagens de 0 a 4
+                        writer.write(i + " " + contagem[i]); // Contagens de 0 a 4
                         writer.newLine();
                     }
-                    writer.write("5+ " + counts[5]); // Contagem para 5 ou mais ocorrências
+                    writer.write("5+ " + contagem[5]); // Contagem para 5 ou mais ocorrências
                 }
                 System.out.println("Ficheiro " + outputFileName + " gravado com sucesso.");
-            } else if (option.startsWith("ficheiro ")) {
+            } else if (opcao.startsWith("ficheiro ")) {
                 // Caso "ficheiro <letra> nome": lista palavras que começam com a letra especificada e salva no ficheiro de saída fornecido
-                String[] parts = option.split(" "); // Divide a opção para extrair parâmetros
-                char c = parts[1].charAt(0); // Letra especificada
-                String outputFileName = "Output/" + parts[2]; // Nome do ficheiro de saída
+                String[] parte = opcao.split(" "); // Divide a opção para extrair parâmetros
+                char letra = parte[1].charAt(0); // Letra especificada
+                String outputFileName = "Output/" + parte[2]; // Nome do ficheiro de saída
 
                 // Escreve a lista de palavras no arquivo de saída
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName))) {
-                    analista.listaPalavras(c, writer);
+                    analista.calcularPalavras(letra, writer);
                 }
                 System.out.println("Ficheiro " + outputFileName + " gravado com sucesso.");
-            } else if (option.equals("terminar")) {
+            } else if (opcao.equals("terminar")) {
                 // Caso "terminar": encerra o programa
                 System.out.println("Sessao terminada.");
                 break;
