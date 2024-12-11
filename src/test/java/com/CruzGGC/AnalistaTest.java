@@ -9,8 +9,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AnalistaTest {
 
-    // Testes de Partição do Domínio de Entrada
-
     @Test
     void testeEntradaVazia() throws Exception {
         // Entrada vazia
@@ -45,8 +43,6 @@ class AnalistaTest {
 
         assertArrayEquals(new int[]{0, 1, 1, 1, 0, 1}, contagem, "Verifica as frequências de 'a' nas palavras.");
     }
-
-    // Testes Estruturais
 
     @Test
     void testeCriacaoFicheiroSaidaEmMemoria() throws Exception {
@@ -100,8 +96,6 @@ class AnalistaTest {
         assertEquals(0, contagem[5], "Nenhuma palavra tem 5 ou mais 'e'.");
     }
 
-    // Testes Unitários
-
     @Test
     void testeCalcularLetras() throws Exception {
         String input = """
@@ -139,7 +133,6 @@ class AnalistaTest {
         assertTrue(output.contains("E 1"), "A saída deve conter 'E 1'.");
     }
 
-    // Testes Lógicos
 
     @Test
     void testePalavrasComMaisDeCincoOcorrencias() throws Exception {
