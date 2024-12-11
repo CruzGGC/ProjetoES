@@ -23,15 +23,15 @@ class AnalistaTest {
     }
 
     @Test
-    void testSemCaracterAnalisado() throws Exception {
+    void testSemLetrasAnalisadas() throws Exception {
         String input = """
-            TEST TESTING UNIT TESTS.
+            BENFICA BENFICA BENFICA!!!.
             """;
 
         Analista analista = new Analista(new StringReader(input));
-        int[] counts = analista.quantasOcorrencias('a');
+        int[] counts = analista.quantasOcorrencias('u');
 
-        assertArrayEquals(new int[]{4, 0, 0, 0, 0, 0}, counts, "Todas as palavras devem estar em count[0].");
+        assertArrayEquals(new int[]{3, 0, 0, 0, 0, 0}, counts, "Todas as palavras devem estar em count[0].");
     }
 
     @Test
@@ -49,7 +49,7 @@ class AnalistaTest {
     // Testes Estruturais
 
     @Test
-    void testCriacaoArquivoSaidaEmMemoria() throws Exception {
+    void testCriacaoFicheiroSaidaEmMemoria() throws Exception {
         String input = """
             O Pai Natal nao existe.
             Mas o coelho da Pascoa existe
@@ -67,7 +67,7 @@ class AnalistaTest {
     }
 
     @Test
-    void testPalavrasComCaractereEspecifico() throws Exception {
+    void testPalavrasComLetrasEspecificas() throws Exception {
         String input = """
             Mas mais Mas mesmo.
             """;
@@ -80,10 +80,11 @@ class AnalistaTest {
         String output = writer.toString();
         assertTrue(output.contains("MAS 2"), "A saída deve conter 'MAS 2'.");
         assertTrue(output.contains("MESMO 1"), "A saída deve conter 'MESMO 1'.");
+        assertTrue(output.contains("MAIS 1"), "A saída deve conter 'MAIS 1'.");
     }
 
     @Test
-    void testExclusaoCaracteresEspeciais() throws Exception {
+    void testExclusaoLetrasEspeciais() throws Exception {
         String input = """
             @Te5te! Testando. t&ste..
             """;
@@ -94,6 +95,9 @@ class AnalistaTest {
         assertEquals(0, counts[0], "Deve haver uma palavra sem 'e'.");
         assertEquals(2, counts[1], "Duas palavras têm 1 'e'.");
         assertEquals(1, counts[2], "Duas palavras têm 2 'e'.");
+        assertEquals(0, counts[3], "Nenhuma palavra tem 3 'e'.");
+        assertEquals(0, counts[4], "Nenhuma palavra tem 4 'e'.");
+        assertEquals(0, counts[5], "Nenhuma palavra tem 5 ou mais 'e'.");
     }
 
     // Testes Unitários
@@ -112,6 +116,9 @@ class AnalistaTest {
         assertEquals(11, counts[0], "Palavras sem 'e'");
         assertEquals(3, counts[1], "Palavras com 1 'e'");
         assertEquals(3, counts[2], "Palavras com 2 'e'");
+        assertEquals(0, counts[3], "Palavras com 3 'e'");
+        assertEquals(0, counts[4], "Palavras com 4 'e'");
+        assertEquals(0, counts[5], "Palavras com 5 ou mais 'e'");
     }
 
     @Test
@@ -145,7 +152,9 @@ class AnalistaTest {
 
         assertEquals(0, counts[0], "Nenhuma palavra sem 'e'.");
         assertEquals(0, counts[1], "Nenhuma palavra com 1 'e'.");
-        assertEquals(0, counts[4], "Nenhuma palavra com menos de 5 'e'.");
+        assertEquals(0, counts[2], "Nenhuma palavra com 2 'e'.");
+        assertEquals(0, counts[3], "Nenhuma palavra com 3 'e'.");
+        assertEquals(0, counts[4], "Nenhuma palavra com 4 'e'.");
         assertEquals(3, counts[5], "Todas as palavras têm 5 ou mais 'e'.");
     }
 
@@ -163,5 +172,7 @@ class AnalistaTest {
         String output = writer.toString();
         assertTrue(output.contains("MAS 1"), "A saída deve conter 'MAS 1'.");
         assertTrue(output.contains("MESMO 1"), "A saída deve conter 'MESMO 1'.");
+        assertTrue(output.contains("MAIS 2"), "A saída deve conter 'MAIS 1'.");
+
     }
 }

@@ -14,7 +14,7 @@ public class RunAnalista {
 
         Scanner scanner = new Scanner(System.in); // Lê as entradas do utilizador
         System.out.print("Introduza o nome do ficheiro: ");
-        String fileName = scanner.nextLine(); // Nome do arquivo a ser processado
+        String fileName = scanner.nextLine(); // Nome do ficheiro a ser processado
         Analista analista = new Analista("Output/" + fileName); // Inicializa o Analista com o ficheiro fornecido
 
         while (true) {
@@ -23,7 +23,7 @@ public class RunAnalista {
 
             if (option.startsWith("letra ")) {
                 // Cria um ficheiro com a contagem de palavras com a letra especificada
-                char c = option.charAt(6); // Obtém o caractere especificado
+                char c = option.charAt(6); // Obtém a letra especificada
                 int[] counts = analista.quantasOcorrencias(c); // Calcula as frequências de c
                 String outputFileName = "Output/" + c + ".out";
 
@@ -37,10 +37,10 @@ public class RunAnalista {
                 }
                 System.out.println("Ficheiro " + outputFileName + " gravado com sucesso.");
             } else if (option.startsWith("ficheiro ")) {
-                // Caso "ficheiro c nome": lista palavras que começam com c e salva no arquivo nome
+                // Caso "ficheiro <letra> nome": lista palavras que começam com a letra especificada e salva no ficheiro de saída fornecido
                 String[] parts = option.split(" "); // Divide a opção para extrair parâmetros
-                char c = parts[1].charAt(0); // Caractere especificado
-                String outputFileName = "Output/" + parts[2]; // Nome do arquivo de saída
+                char c = parts[1].charAt(0); // Letra especificada
+                String outputFileName = "Output/" + parts[2]; // Nome do ficheiro de saída
 
                 // Escreve a lista de palavras no arquivo de saída
                 try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName))) {
